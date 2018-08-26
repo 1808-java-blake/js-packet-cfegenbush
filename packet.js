@@ -13,7 +13,9 @@
 // Define function: fib(n) 
 // Return the nth number in the fibonacci sequence.
 function fib(n) {
-    let a = 1, b = 0, temp;
+    let a = 1;
+    let b = 0;
+    let temp;
     while (n >= 0) {
         temp = a;
         a = a + b;
@@ -22,6 +24,7 @@ function fib(n) {
     }
     return b;
 }
+
 // 2. Bubble Sort
 // Define function: bubbleSort(numArray)
 // Use the bubble sort algorithm to sort the array.
@@ -40,12 +43,14 @@ function bubbleSort(numArray) {
     } while (swap)
     return sorted;
 }
+
 // 3. Reverse String
 // Define function: reverseStr(someStr)
 // Reverse and return the String.
 function reverseStr(someStr) {
     return [...someStr].reverse().join('');
 }
+
 // 4. Factorial
 // Define function: factorial(someNum)
 // Use recursion to compute and return the factorial of someNum.
@@ -53,7 +58,7 @@ function factorial(someNum) {
     if (someNum === 1) {
         return 1;
     } else {
-        return factorial(someNum - 1) * someNum
+        return factorial(someNum - 1) * someNum;ddaddd
     }
 }
 
@@ -169,7 +174,6 @@ function spliceElement(someArr) {
     console.log(someArr.length);
     someArr.splice(2,1);
     console.log(someArr.length);
-    console.log(someArr);
 }
 
 // 12. Defining an object using a constructor
@@ -180,6 +184,7 @@ function Person(name, age) {
     this.name = name;
     this.age = age;
 }
+
 // 13. Defining an object using an object literal
 // Define function getPerson(name, age)
 // The following line should set a Person object to the variable john:

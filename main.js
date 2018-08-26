@@ -56,6 +56,7 @@ function getHobbies() {
         }
     }
 }
+
 // 5. Custom Attribute
 // Define function getCustomAttribute()
 // Find all elements with "data-customAttr" attribute
@@ -66,6 +67,7 @@ function getCustomAttribute() {
         console.log(`Element: ${x.tagName} Value: ${x.getAttribute('data-customAttr')}`);
     }
 }
+
 // 6. Sum Event
 // NOTE: Write unobtrusive Javascript
 // Regarding these elements:
@@ -95,12 +97,18 @@ function changeEventHandler(event) {
         sum.innerHTML = +num1Val + +num2Val;
     }
 }
+
 // 7. Skills Event
 // NOTE: Write unobtrusive Javascript
 // When user selects a skill, create an alert with a message similar to:
 // 	"Are you sure CSS is one of your skills?"
 // NOTE: no alert should appear when user deselects a skill.
-
+let options = document.getElementsByName('skills');
+for (let i of options) {
+    i.addEventListener('change', function() {
+        alert(`Are you sure ${this.value} is one of your skills?`);
+    });
+}
 
 // 8. Favorite Color Event
 // NOTE: Write unobtrusive Javascript
@@ -109,25 +117,90 @@ function changeEventHandler(event) {
 // 	"So you like green more than blue now?"
 // In this example, green is the new value and blue is the old value.
 // Make the background color (of all favoriteColor radio buttons) the newly selected favoriteColor
+let colors = document.getElementsByName('favoriteColor');
+
+let selected = null;
+for (let i of colors) {
+    i.onclick = function() {
+        if (!selected) {
+            selected = this.value;
+            changeColor();
+        }
+        if (selected && this.value !== selected) {
+            alert(`So you like ${this.value} more than ${selected} now?`);
+            selected = this.value;
+            changeColor();
+        }
+    };
+}
+
+function changeColor() {
+    console.log(selected);
+    let inputs= document.getElementsByTagName('input');
+    for (let x of inputs) {
+        if (x.name === 'favoriteColor') {
+            x.parentElement.style.backgroundColor = selected;
+        }
+    }
+}
+
 
 // 9. Show/Hide Event
 // NOTE: Write unobtrusive Javascript
 // When user hovers over an employees name:
 // 	Hide the name if shown.
 // 	Show the name if hidden.
+let names = document.getElementsByClassName('empName');
+for (let i of names) {
+    i.addEventListener('mouseover', function() {
+        if (this.style.opacity === '0') {
+            this.style.opacity  = 1;
+        } else {
+            this.style.opacity  = 0; 
+        }
+    });
+}
 
 // 10. Current Time
 // Regarding this element:
 // 	<h5 id="currentTime"></h5>
 // Show the current time in this element in this format: 9:05:23 AM
 // The time should be accurate to the second without having to reload the page.
+function clock() {
+    let timeElement = document.getElementById('currentTime');
+    let formattedTime = new Date().toLocaleTimeString();
+    timeElement.innerHTML = formattedTime;
+    setTimeout(clock, 1000);
+}
+clock();
 
 // 11. Delay
 // Regarding this element:
 // 	<p id="helloWorld">Hello, World!</p>
 // Three seconds after a user clicks on this element, change the text to a random color.
+let helloElement = document.getElementById('helloWorld');
+helloElement.addEventListener('click', function() {
+    setTimeout(()=> {
+        helloElement.style.color = randomColor();
+    }, 3000);
+});
+
+function randomColor() {
+    colors = ['red','green','blue','yellow','orange','purple'];
+    let numForSelect = Math.floor(Math.random() * Math.floor(6));
+    let color = colors[numForSelect];
+    return color;
+}
 
 // 12. Walk the DOM
 // Define function walkTheDOM(node, func)
 // This function should traverse every node in the DOM. Use recursion.
 // On each node, call func(node).
+function walkTheDOM(node, func) {
+    func(node);
+    node = node.firstChild;
+    while (node) {
+        walkTheDOM(node, func);
+        node = node.nextSibling;
+    }
+}
